@@ -29,7 +29,7 @@ controller.get = async (req, res) => {
     });
 
     if (Charity) {
-      res.status(201).json(Charity.total);
+      res.status(201).json(Charity.total.toFixed(2));
     } else {
       res.status(404).json({ message: "No Charity found" });
     }

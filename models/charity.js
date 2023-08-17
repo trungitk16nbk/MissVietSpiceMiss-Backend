@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Charity.init({
-    price: DataTypes.DECIMAL,
     total: DataTypes.DECIMAL
   }, {
     sequelize,

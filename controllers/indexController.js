@@ -15,7 +15,7 @@ controller.create = async (req, res) => {
       total += parseFloat(oldCharity.total);
     }
 
-    const Charity = await models.Charity.create({ price, total });
+    const Charity = await models.Charity.create({total });
     res.status(201).json(Charity);
   } catch (error) {
     res.status(400).json({ error: "Error creating Charity." });

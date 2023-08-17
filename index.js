@@ -1,5 +1,5 @@
 'use strict'; 
-
+require("dotenv").config();
 const express = require('express');
 const app = express();
 const cors = require('cors'); // Đảm bảo bạn đã cài đặt thư viện cors

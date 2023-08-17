@@ -2,18 +2,18 @@
 require("dotenv").config();
 const express = require('express');
 const app = express();
-const cors = require('cors'); // Đảm bảo bạn đã cài đặt thư viện cors
+// const cors = require('cors'); // Đảm bảo bạn đã cài đặt thư viện cors
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const port = process.env.PORT || 3000; 
 // Cấu hình tùy chỉnh
-app.options('/charity', cors()); // Xác định các tùy chọn cho Preflight request
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://trung-spice.myshopify.com');
-    // Các cài đặt CORS khác...
-    next();
-  });
+// app.options('/charity', cors()); // Xác định các tùy chọn cho Preflight request
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', 'https://trung-spice.myshopify.com');
+//     // Các cài đặt CORS khác...
+//     next();
+//   });
 
 app.get('/createTables', (req, res) => { 
     let models = require('./models');

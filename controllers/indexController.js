@@ -7,7 +7,7 @@ const models = require("../models");
 controller.create = async (req, res) => {
   try {
     let price = parseFloat(req.body.price);
-    let total = price;
+    let total = (price * parseFloat(process.env.charityPercent)).toFixed(2);
     const oldCharity = await models.Charity.findOne({
       order: [["createdAt", "DESC"]],
     });

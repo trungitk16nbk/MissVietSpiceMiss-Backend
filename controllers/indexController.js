@@ -6,8 +6,11 @@ const models = require("../models");
 // create new Charity when have a order
 controller.create = async (req, res) => {
   try {
-    let price = parseFloat(req.body.price);
-    let total = (price * parseFloat(process.env.charityPercent));
+    const data = req.body;  // Dữ liệu từ request POST gửi từ Shopify
+    const orderID = data.id;  // ID của đơn hàng
+    const totalPrice = data.total_price;  // Tổng giá trị đơn hàng
+
+    let total = totalPrice * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
     const oldCharity = await models.Charity.findOne({
       order: [["createdAt", "DESC"]],
     });

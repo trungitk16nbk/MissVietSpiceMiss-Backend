@@ -6,37 +6,35 @@ const models = require("../models");
 // create new Charity when have a order
 controller.create = async (req, res) => {
   try {
-    const data = req.body;  // Dữ liệu từ request POST gửi từ Shopify
-    const orderID = data.id;  // ID của đơn hàng
-    const totalPrice = data.total_price;  // Tổng giá trị đơn hàng
+    const ShopifyOrderData = req.body;  // Dữ liệu từ request POST gửi từ Shopify
+    const ShopifyOrderId = ShopifyOrderData.id;
+    const OrderTime = ShopifyOrderData.created_at; 
+    const TotalAmount = ShopifyOrderData.total_price;
+    let CharityAmount = TotalAmount * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
 
-    let total = totalPrice * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
-    const oldCharity = await models.Charity.findOne({
-      order: [["createdAt", "DESC"]],
-    });
-    if (oldCharity) {
-      total += parseFloat(oldCharity.total);
-    }
-    const Charity = await models.Charity.create({total});
+    const Charity = await models.Charity.create({ShopifyOrderId, OrderTime, TotalAmount, CharityAmount, ShopifyOrderData});
     res.status(201).json(Charity);
   } catch (error) {
     res.status(400).json({ error: "Error creating Charity." });
   }
 };
 
-// get total charities
 controller.get = async (req, res) => {
   try {
-    const Charity = await models.Charity.findOne({
-      order: [["createdAt", "DESC"]],
+    const result = await models.Charity.findOne({
+      attributes: [
+        [models.sequelize.fn('SUM', models.sequelize.col('CharityAmount')), 'totalCharityAmount']
+      ]
     });
 
-    if (Charity) {
-      res.status(201).json(parseFloat(Charity.total).toFixed(2));
+    const totalCharityAmount = result.get('totalCharityAmount');
+    if (totalCharityAmount !== null) {
+      res.status(200).json(parseFloat(totalCharityAmount).toFixed(2));
     } else {
-      res.status(404).json({ message: "No Charity found" });
+      res.status(200).json(0);
     }
   } catch (error) {
+    console.error('Error getting Charity:', error);
     res.status(500).json({ error: "Error getting Charity" });
   }
 };

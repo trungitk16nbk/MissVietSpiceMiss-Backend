@@ -11,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.options('/charity', cors()); // Xác định các tùy chọn cho Preflight request
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'https://trung-spice.myshopify.com');
+    res.header('Access-Control-Allow-Origin', 'https://vnspice.myshopify.com');
     // Các cài đặt CORS khác...
     next();
   });

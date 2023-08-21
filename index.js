@@ -10,11 +10,21 @@ const port = process.env.PORT || 3000;
 // Cấu hình tùy chỉnh
 app.options('/charity', cors()); // Xác định các tùy chọn cho Preflight request
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://trung-spice.myshopify.com');
-    res.header('Access-Control-Allow-Origin', 'https://vnspice.myshopify.com');
+    const allowedOrigins = [
+        'https://trung-spice.myshopify.com',
+        'https://vnspice.myshopify.com'
+        // Thêm các tên miền khác nếu cần
+    ];
+
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+
     // Các cài đặt CORS khác...
     next();
-  });
+});
+
 
 app.get('/createTables', (req, res) => { 
     let models = require('./models');

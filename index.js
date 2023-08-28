@@ -13,7 +13,7 @@ app.use(cors({
     origin: function (origin, callback) {
         const allowedOrigins = [
             'https://trung-spice.myshopify.com',
-            'https://vnspice.myshopify.com'
+            'https://vnspice.com/'
             // Thêm các tên miền khác nếu cần
         ];
 

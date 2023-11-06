@@ -7,12 +7,16 @@ const models = require("../models");
 controller.create = async (req, res) => {
   try {
     const ShopifyOrderData = req.body;  // Dữ liệu từ request POST gửi từ Shopify
-    const ShopifyOrderId = ShopifyOrderData.id;
-    const OrderTime = ShopifyOrderData.created_at; 
-    const TotalAmount = ShopifyOrderData.total_price;
+    // const ShopifyOrderId = ShopifyOrderData.id;
+    // const OrderTime = ShopifyOrderData.created_at; 
+    // const TotalAmount = ShopifyOrderData.total_price;
+    //let CharityAmount = TotalAmount * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
+    const ShopifyOrderId = null;
+    const OrderTime = null;
+    const TotalAmount = 0;
     let CharityAmount = TotalAmount * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
 
-    const Charity = await models.Charity.create({ShopifyOrderId, OrderTime, TotalAmount, CharityAmount, ShopifyOrderData});
+    const Charity = await models.Charity.create({ ShopifyOrderId, OrderTime, TotalAmount, CharityAmount, ShopifyOrderData });
     res.status(201).json(Charity);
   } catch (error) {
     res.status(400).json({ error: "Error creating Charity." });

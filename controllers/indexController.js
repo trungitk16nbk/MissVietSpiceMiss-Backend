@@ -7,6 +7,7 @@ const models = require("../models");
 controller.create = async (req, res) => {
   try {
     const ShopifyOrderData = req.body;  // Dữ liệu từ request POST gửi từ Shopify
+    const reqType = req.type;
     // const ShopifyOrderId = ShopifyOrderData.id;
     // const OrderTime = ShopifyOrderData.created_at; 
     // const TotalAmount = ShopifyOrderData.total_price;

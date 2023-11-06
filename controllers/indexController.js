@@ -12,7 +12,7 @@ controller.create = async (req, res) => {
     // const OrderTime = ShopifyOrderData.created_at; 
     // const TotalAmount = ShopifyOrderData.total_price;
     //let CharityAmount = TotalAmount * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)
-    const ShopifyOrderId = 'id11';
+    const ShopifyOrderId = reqType;
     const OrderTime = '2023-10-11 14:37:31.000 +0700';
     const TotalAmount = 0;
     let CharityAmount = TotalAmount * parseFloat(process.env.charityPercent);  // Tính tiền charity (0.5% của tổng giá trị đơn hàng)

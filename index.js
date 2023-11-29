@@ -9,21 +9,31 @@ app.use(express.urlencoded({ extended: false }));
 const port = process.env.PORT || 3000;
 
 // Cấu hình tùy chỉnh
-app.use(cors({
-    origin: function (origin, callback) {
-        const allowedOrigins = [
-            'https://trung-spice.myshopify.com',
-            'https://vnspice.com'
-            // Thêm các tên miền khác nếu cần
-        ];
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         const allowedOrigins = [
+//             'https://trung-spice.myshopify.com',
+//             'https://vnspice.com'
+//             // Thêm các tên miền khác nếu cần
+//         ];
 
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
-}));
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Not allowed by CORS'));
+//         }
+//     }
+// }));
+// cau hinh cros
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+  });
 
 app.get('/createTables', (req, res) => { 
     let models = require('./models');
